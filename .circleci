@@ -1,1 +1,26 @@
+version: 2.1
 
+jobs:
+  e2e_tests:
+    machine:
+      - image: ubuntu-2004:current
+    resource_class: large
+    steps:
+          name: run tests
+          command: "run rspec tests" 
+  say-hello:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+          
+workflows:
+  say-hello-workflow:
+    jobs:
+      - say-hello
+  tests:
+    jobs:
+      -e2e_tests
